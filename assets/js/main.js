@@ -1,6 +1,6 @@
 /**
  * Siddarth Santosh Personal Website
- * Lightweight Client Script for Form Handling & Enhancements
+ * Client Script for Contact Form Handling (Configured for dhyanesh450@gmail.com)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initializes accessible contact form handling with Netlify Forms & AJAX fallback
+ * Initializes contact form handling with direct mailto triggering for local testing
+ * Target Recipient: dhyanesh450@gmail.com
  */
 function initContactForm() {
   const form = document.getElementById('contact-form');
@@ -17,9 +18,11 @@ function initContactForm() {
   const statusBox = document.getElementById('form-status');
   const submitBtn = form.querySelector('button[type="submit"]');
   const originalBtnText = submitBtn ? submitBtn.textContent : 'Send message';
+  
+  // Configured recipient for testing
+  const RECEIVER_EMAIL = 'dhyanesh450@gmail.com';
 
-  form.addEventListener('submit', async (e) => {
-    // If Netlify Forms is processing normally without JS, fallback works automatically
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     // Check Honeypot spam trap
@@ -29,57 +32,57 @@ function initContactForm() {
       return;
     }
 
-    // Basic client validation
+    // Client field validation
     const nameInput = document.getElementById('contact-name');
     const emailInput = document.getElementById('contact-email');
     const messageInput = document.getElementById('contact-message');
 
-    if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
+    const name = nameInput ? nameInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const message = messageInput ? messageInput.value.trim() : '';
+
+    if (!name || !email || !message) {
       showStatus('Please fill out all fields before sending.', 'error');
       return;
     }
 
     // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailInput.value.trim())) {
+    if (!emailRegex.test(email)) {
       showStatus('Please enter a valid email address.', 'error');
-      emailInput.focus();
+      if (emailInput) emailInput.focus();
       return;
     }
 
     // UI Loading state
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+      submitBtn.textContent = 'Opening email client...';
     }
     hideStatus();
 
-    const formData = new FormData(form);
+    // Construct mailto link
+    const subject = encodeURIComponent(`Message from ${name}`);
+    const body = encodeURIComponent(`${message}\n\n---\nFrom: ${name}\nEmail: ${email}`);
+    const mailtoUrl = `mailto:${RECEIVER_EMAIL}?subject=${subject}&body=${body}`;
 
     try {
-      /*
-       * Netlify Forms AJAX endpoint:
-       * When deployed on Netlify, submitting URL-encoded form data with 'form-name'
-       * automatically triggers Netlify's built-in form capture and forwards
-       * notification emails to: siddarthsantosh3@gmail.com
-       */
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
-      });
+      // Trigger user's mail client directly
+      window.location.href = mailtoUrl;
 
-      if (response.ok) {
-        showStatus('Thank you! Your message has been sent to Siddarth. He will get back to you soon.', 'success');
-        form.reset();
-      } else {
-        throw new Error('Server response not OK');
-      }
-    } catch (err) {
-      console.error('Contact submission error:', err);
-      // In local development or non-Netlify environments:
-      showStatus('Thank you! Your message has been received. (In production on Netlify, this routes directly to siddarthsantosh3@gmail.com)', 'success');
+      // Display clear status message with fallback link
+      showStatusHTML(
+        `Opening your email client to send to <strong>${RECEIVER_EMAIL}</strong>. ` +
+        `If it didn't open automatically, <a href="${mailtoUrl}" style="text-decoration:underline; font-weight:600; color:inherit;">click here to open your mail app</a>.`,
+        'success'
+      );
       form.reset();
+    } catch (err) {
+      console.error('Mailto error:', err);
+      showStatusHTML(
+        `Please <a href="${mailtoUrl}" style="text-decoration:underline; color:inherit;">click here to email ${RECEIVER_EMAIL}</a> directly.`,
+        'error'
+      );
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -91,6 +94,12 @@ function initContactForm() {
   function showStatus(message, type) {
     if (!statusBox) return;
     statusBox.textContent = message;
+    statusBox.className = `form-status ${type}`;
+  }
+
+  function showStatusHTML(html, type) {
+    if (!statusBox) return;
+    statusBox.innerHTML = html;
     statusBox.className = `form-status ${type}`;
   }
 
