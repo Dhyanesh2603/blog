@@ -20,7 +20,7 @@ function initContactForm() {
   const originalBtnText = submitBtn ? submitBtn.textContent : 'Send message';
 
   // Configured recipient endpoint
-  const target = atob('ZGh5YW5lc2g0NTBAZ21haWwuY29t');
+  const target = atob('c2lkZGFydGhzYW50b3NoM0BnbWFpbC5jb20=');
   const apiEndpoint = `https://formsubmit.co/ajax/${target}`;
 
   form.addEventListener('submit', async (e) => {
