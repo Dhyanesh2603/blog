@@ -48,7 +48,7 @@ html {
 
 body {
   margin: 0;
-  background: #EFEBE1;
+  background: var(--cream);
   font-family: var(--font-sans);
   color: var(--ink);
   line-height: 1.6;
@@ -101,11 +101,12 @@ body {
    ========================================================================== */
 
 .page {
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   background: var(--cream);
   min-height: 100vh;
-  padding: 2.5rem 3rem 4rem;
+  padding: 2.5rem clamp(2rem, 5vw, 4.5rem) 4rem;
   display: flex;
   flex-direction: column;
 }
