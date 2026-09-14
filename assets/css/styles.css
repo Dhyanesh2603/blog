@@ -741,14 +741,12 @@ a.card:hover {
   cursor: not-allowed;
 }
 
-/* Accessible Status Box for Form */
+/* Accessible Status Text */
 .form-status {
-  padding: 12px 16px;
-  border-radius: 8px;
   font-size: 13px;
   text-align: center;
   line-height: 1.5;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .form-status.hidden {
@@ -757,16 +755,14 @@ a.card:hover {
 
 .form-status.success {
   display: block;
-  background: #EBF5EE;
-  color: #245A3F;
-  border: 0.5px solid #B7E4C7;
+  color: var(--blue-deep);
+  font-weight: 500;
 }
 
 .form-status.error {
   display: block;
-  background: #FDF2F2;
-  color: #9B2C2C;
-  border: 0.5px solid #F8B4B4;
+  color: #A34848;
+  font-size: 13px;
 }
 
 /* ==========================================================================

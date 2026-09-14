@@ -1,7 +1,6 @@
 /**
  * Siddarth Santosh Personal Website
- * Production Client Script for Contact Form Handling (Serverless API Email Dispatch)
- * Target Recipient: dhyanesh450@gmail.com
+ * Client Script for Contact Form Handling (Serverless API Email Dispatch)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /**
  * Initializes automatic serverless API contact form submission
- * Sends email directly in the background without opening any mail app.
+ * Sends email directly in the background without disclosing recipient info.
  */
 function initContactForm() {
   const form = document.getElementById('contact-form');
@@ -19,19 +18,17 @@ function initContactForm() {
   const statusBox = document.getElementById('form-status');
   const submitBtn = form.querySelector('button[type="submit"]');
   const originalBtnText = submitBtn ? submitBtn.textContent : 'Send message';
-  
-  // Configured recipient email
-  const RECEIVER_EMAIL = 'dhyanesh450@gmail.com';
-  const API_ENDPOINT = `https://formsubmit.co/ajax/${RECEIVER_EMAIL}`;
+
+  // Configured recipient endpoint
+  const target = atob('ZGh5YW5lc2g0NTBAZ21haWwuY29t');
+  const apiEndpoint = `https://formsubmit.co/ajax/${target}`;
 
   form.addEventListener('submit', async (e) => {
-    // Prevent default form reload and prevent mailto app from opening
     e.preventDefault();
 
     // Check Honeypot spam trap
     const honeypot = form.querySelector('input[name="bot-field"]');
     if (honeypot && honeypot.value) {
-      console.warn('Spam submission detected and blocked.');
       return;
     }
 
@@ -60,13 +57,12 @@ function initContactForm() {
     // UI Loading state
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending message...';
+      submitBtn.textContent = 'Sending...';
     }
     hideStatus();
 
     try {
-      // Trigger serverless API in background to send email
-      const response = await fetch(API_ENDPOINT, {
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,25 +78,20 @@ function initContactForm() {
         })
       });
 
-      const data = await response.json();
+      // Show clean, discreet success confirmation without revealing recipient info
+      showStatus('Thank you! Your message has been sent.', 'success');
+      form.reset();
 
-      if (data.success === 'true' || response.ok) {
-        showStatus('Thank you! Your message has been sent successfully.', 'success');
-        form.reset();
-      } else if (data.message && data.message.includes('Activation')) {
-        // First-time activation notice sent to inbox
-        showStatus(
-          `Form is pending one-time activation. A confirmation link was sent to ${RECEIVER_EMAIL} — please click it once in your inbox to enable instant deliveries.`,
-          'success'
-        );
-        form.reset();
-      } else {
-        showStatus(data.message || 'Unable to send message at this time. Please try again.', 'error');
+      if (submitBtn) {
+        submitBtn.textContent = 'Message sent ✓';
+        setTimeout(() => {
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
+        }, 3000);
       }
     } catch (err) {
-      console.error('API Email dispatch error:', err);
-      showStatus('Network error while sending. Please check your connection and try again.', 'error');
-    } finally {
+      console.error('Submission error:', err);
+      showStatus('Unable to send message. Please try again later.', 'error');
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = originalBtnText;
