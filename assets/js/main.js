@@ -1,6 +1,7 @@
 /**
  * Siddarth Santosh Personal Website
- * Client Script for Contact Form Handling (Configured for dhyanesh450@gmail.com)
+ * Production Client Script for Contact Form Handling (Serverless API Email Dispatch)
+ * Target Recipient: dhyanesh450@gmail.com
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,8 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Initializes contact form handling with direct mailto triggering for local testing
- * Target Recipient: dhyanesh450@gmail.com
+ * Initializes automatic serverless API contact form submission
+ * Sends email directly in the background without opening any mail app.
  */
 function initContactForm() {
   const form = document.getElementById('contact-form');
@@ -19,10 +20,12 @@ function initContactForm() {
   const submitBtn = form.querySelector('button[type="submit"]');
   const originalBtnText = submitBtn ? submitBtn.textContent : 'Send message';
   
-  // Configured recipient for testing
+  // Configured recipient email
   const RECEIVER_EMAIL = 'dhyanesh450@gmail.com';
+  const API_ENDPOINT = `https://formsubmit.co/ajax/${RECEIVER_EMAIL}`;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
+    // Prevent default form reload and prevent mailto app from opening
     e.preventDefault();
 
     // Check Honeypot spam trap
@@ -57,32 +60,46 @@ function initContactForm() {
     // UI Loading state
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Opening email client...';
+      submitBtn.textContent = 'Sending message...';
     }
     hideStatus();
 
-    // Construct mailto link
-    const subject = encodeURIComponent(`Message from ${name}`);
-    const body = encodeURIComponent(`${message}\n\n---\nFrom: ${name}\nEmail: ${email}`);
-    const mailtoUrl = `mailto:${RECEIVER_EMAIL}?subject=${subject}&body=${body}`;
-
     try {
-      // Trigger user's mail client directly
-      window.location.href = mailtoUrl;
+      // Trigger serverless API in background to send email
+      const response = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          message: message,
+          _subject: `New message from ${name} (${email})`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
 
-      // Display clear status message with fallback link
-      showStatusHTML(
-        `Opening your email client to send to <strong>${RECEIVER_EMAIL}</strong>. ` +
-        `If it didn't open automatically, <a href="${mailtoUrl}" style="text-decoration:underline; font-weight:600; color:inherit;">click here to open your mail app</a>.`,
-        'success'
-      );
-      form.reset();
+      const data = await response.json();
+
+      if (data.success === 'true' || response.ok) {
+        showStatus('Thank you! Your message has been sent successfully.', 'success');
+        form.reset();
+      } else if (data.message && data.message.includes('Activation')) {
+        // First-time activation notice sent to inbox
+        showStatus(
+          `Form is pending one-time activation. A confirmation link was sent to ${RECEIVER_EMAIL} — please click it once in your inbox to enable instant deliveries.`,
+          'success'
+        );
+        form.reset();
+      } else {
+        showStatus(data.message || 'Unable to send message at this time. Please try again.', 'error');
+      }
     } catch (err) {
-      console.error('Mailto error:', err);
-      showStatusHTML(
-        `Please <a href="${mailtoUrl}" style="text-decoration:underline; color:inherit;">click here to email ${RECEIVER_EMAIL}</a> directly.`,
-        'error'
-      );
+      console.error('API Email dispatch error:', err);
+      showStatus('Network error while sending. Please check your connection and try again.', 'error');
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -94,12 +111,6 @@ function initContactForm() {
   function showStatus(message, type) {
     if (!statusBox) return;
     statusBox.textContent = message;
-    statusBox.className = `form-status ${type}`;
-  }
-
-  function showStatusHTML(html, type) {
-    if (!statusBox) return;
-    statusBox.innerHTML = html;
     statusBox.className = `form-status ${type}`;
   }
 
