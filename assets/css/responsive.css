@@ -7,8 +7,14 @@
    Medium Devices & Tablets (max-width: 860px)
    -------------------------------------------------------------------------- */
 @media (max-width: 860px) {
+  :root {
+    --page-pad-top: 2rem;
+    --page-pad-x: 2rem;
+    --page-pad-bottom: 3rem;
+  }
+
   .page {
-    padding: 2rem 2rem 3rem;
+    padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
   }
 
   /* Adjust grid columns for intermediate tablet screen widths */
@@ -36,13 +42,20 @@
    Mobile Devices & Small Screens (max-width: 640px)
    -------------------------------------------------------------------------- */
 @media (max-width: 640px) {
+  :root {
+    --page-pad-top: 1.5rem;
+    --page-pad-x: 1.25rem;
+    --page-pad-bottom: 2.5rem;
+  }
+
   .page {
-    padding: 1.5rem 1.25rem 2.5rem;
+    padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
   }
 
   /* Header & Navigation */
   header.siteheader {
     margin-bottom: 2rem;
+    padding: 1rem var(--page-pad-x);
   }
 
   nav.sitenav {

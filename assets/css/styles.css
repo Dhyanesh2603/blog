@@ -28,6 +28,13 @@
   --clay-line: #E8D9CC;
   --clay-block: #E6D2C0;
 
+  /* Header & Navigation */
+  --header-bg: #FFFFFF;
+  --header-border: var(--cream-line);
+  --page-pad-top: 2.5rem;
+  --page-pad-x: clamp(2rem, 5vw, 4.5rem);
+  --page-pad-bottom: 4rem;
+
   /* Typography */
   --font-serif: 'Fraunces', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -106,7 +113,7 @@ body {
   margin: 0;
   background: var(--cream);
   min-height: 100vh;
-  padding: 2.5rem clamp(2rem, 5vw, 4.5rem) 4rem;
+  padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
   display: flex;
   flex-direction: column;
 }
@@ -120,7 +127,16 @@ main.main-content {
    ========================================================================== */
 
 header.siteheader {
-  margin-bottom: 3rem;
+  margin: calc(-1 * var(--page-pad-top)) calc(-1 * var(--page-pad-x)) 3rem;
+  padding: 1.25rem var(--page-pad-x);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  box-shadow: 0 1px 4px rgba(43, 42, 40, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 nav.sitenav {
