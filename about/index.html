@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>About & Contact — Siddarth Santosh</title>
+  <meta name="description" content="About Siddarth Santosh: A high schooler's field notes, kept in public, and contact form.">
+  
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Production Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  
+  <!-- Client Scripts (Deferred) -->
+  <script src="../assets/js/main.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="page">
+    <header class="siteheader">
+      <nav class="sitenav" aria-label="Primary Navigation">
+        <a href="../index.html" class="name">Siddarth Santosh</a>
+        <div class="links">
+          <a href="../index.html">Home</a>
+          <a href="../blog/index.html">Blog</a>
+          <a href="index.html" class="active" aria-current="page">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content" class="main-content">
+      <article class="about" aria-labelledby="about-heading">
+        <p class="eyebrow">About</p>
+        <div class="avatar" aria-hidden="true">S</div>
+        <h1 id="about-heading">A high schooler's field notes, kept in public</h1>
+        
+        <p>I'm 16, from New Jersey. I've been going to India pretty regularly since I was 6. I'm hoping to study international relations or cultural studies in college.</p>
+        <p>I write about the small, specific moments where good intentions meet the world. Most of what's here started with a question I couldn't quite answer at the time&mdash;about a curriculum, a fundraiser, a room full of students I was trying to learn about without getting in the way.</p>
+        <p>Lately a lot of those questions keep leading back to South Asian studies&mdash;the histories, the languages, and how they show up in the spaces I spend time in. I'm still figuring most of this out. This site is where I'm keeping track of it.</p>
+        
+        <div class="facts" role="region" aria-label="Quick Facts">
+          <div>
+            <p class="label">Based in</p>
+            <p class="value">New Jersey, USA</p>
+          </div>
+          <div>
+            <p class="label">Currently</p>
+            <p class="value">In 11th grade</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Contact Section (Integrated matching mockup layout) -->
+      <section class="contact" id="contact" aria-labelledby="contact-heading">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-heading">Get in touch</h2>
+        <p class="sub">Questions about a post, the project, or just to say hi.</p>
+        
+        <form id="contact-form" name="contact" method="POST" action="../contact/success.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="contact">
+          
+          <div class="visually-hidden" aria-hidden="true">
+            <label for="bot-field">Leave this field blank:</label>
+            <input name="bot-field" id="bot-field" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-field">
+            <label for="contact-name" class="visually-hidden">Your name</label>
+            <input type="text" id="contact-name" name="name" placeholder="Your name" required autocomplete="name">
+          </div>
+
+          <div class="form-field">
+            <label for="contact-email" class="visually-hidden">Your email</label>
+            <input type="email" id="contact-email" name="email" placeholder="name@email.com" required autocomplete="email">
+          </div>
+
+          <div class="form-field">
+            <label for="contact-message" class="visually-hidden">Your message</label>
+            <textarea rows="4" id="contact-message" name="message" placeholder="Your message" required></textarea>
+          </div>
+
+          <button type="submit">Send message</button>
+
+          <div id="form-status" class="form-status hidden" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="sitefoot">
+      <div class="foot-links">
+        <a href="../blog/index.html">Blog</a>
+        <a href="index.html">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <span>Siddarth Santosh</span>
+    </footer>
+  </div>
+</body>
+</html>

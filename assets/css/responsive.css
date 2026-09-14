@@ -1,0 +1,282 @@
+/* ==========================================================================
+   Siddarth Santosh — Responsive Stylesheet
+   Breakpoints: Laptop (1024px), Tablet (860px), Mobile (640px / 480px)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Medium Devices & Tablets (max-width: 860px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .page {
+    padding: 2rem 2rem 3rem;
+  }
+
+  /* Adjust grid columns for intermediate tablet screen widths */
+  .series.tan .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .series.clay .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .photo-tile,
+  .story-photo-box,
+  .photo-tile.hero-photo-box,
+  .story-photo-box.hero-photo-box {
+    height: 340px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Devices & Small Screens (max-width: 640px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .page {
+    padding: 1.5rem 1.25rem 2.5rem;
+  }
+
+  /* Header & Navigation */
+  header.siteheader {
+    margin-bottom: 2rem;
+  }
+
+  nav.sitenav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  nav.sitenav .links {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 20px;
+    font-size: 15px;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  nav.sitenav .links a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 2px;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 1.25rem 0 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(26px, 7vw, 32px);
+    line-height: 1.28;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Series Grids — collapse to single column for readability */
+  .series.blue .card-grid,
+  .series.tan .card-grid,
+  .series.clay .card-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .series {
+    margin-top: 2.25rem;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card .thumb {
+    height: 80px;
+  }
+
+  /* Story Layout */
+  .story h1 {
+    font-size: clamp(24px, 6.5vw, 28px);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .story .meta {
+    margin-bottom: 22px;
+    font-size: 12px;
+  }
+
+  .story p.body {
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 18px;
+  }
+
+  .story-photo-figure {
+    margin: 22px 0;
+  }
+
+  .photo-tile,
+  .story-photo-box,
+  .photo-tile.hero-photo-box,
+  .story-photo-box.hero-photo-box {
+    height: 270px;
+    padding: 8px;
+  }
+
+  .photo-tile img,
+  .story-photo-box img {
+    max-height: 254px;
+  }
+
+  /* Stat Row — compact presentation without overflow */
+  .stat-row {
+    gap: 8px;
+    margin: 24px 0;
+    padding: 16px 0;
+  }
+
+  .stat-row p.num {
+    font-size: 20px;
+  }
+
+  .stat-row p.label {
+    font-size: 11px;
+  }
+
+  /* Pullquote */
+  .pullquote {
+    padding-left: 14px;
+    margin: 22px 0;
+  }
+
+  .pullquote p {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* Pill button CTA */
+  .pill-btn-wrap {
+    margin: -4px 0 24px;
+  }
+
+  .pill-btn {
+    font-size: 12px;
+    padding: 10px 18px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Next Card */
+  .next-card {
+    padding: 14px 16px;
+  }
+
+  .next-card .title {
+    font-size: 15px;
+  }
+
+  /* About Page */
+  .about {
+    margin-bottom: 2.5rem;
+  }
+
+  .about h1 {
+    font-size: 24px;
+  }
+
+  .about p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .facts {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  /* Contact Page & Inputs (prevent iOS font-zoom with font-size: 16px) */
+  .contact input,
+  .contact textarea {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .contact input {
+    min-height: 48px;
+  }
+
+  .contact button[type="submit"] {
+    min-height: 48px;
+    font-size: 15px;
+  }
+
+  /* Footer */
+  footer.sitefoot {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  footer.sitefoot .foot-links {
+    gap: 20px;
+  }
+
+  footer.sitefoot a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small Phones (max-width: 380px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  .page {
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .stat-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-row div + div {
+    border-left: none;
+    border-top: 0.5px solid var(--cream-line);
+    padding-top: 10px;
+  }
+
+  .photo-tile,
+  .story-photo-box,
+  .photo-tile.hero-photo-box,
+  .story-photo-box.hero-photo-box {
+    height: 220px;
+  }
+}

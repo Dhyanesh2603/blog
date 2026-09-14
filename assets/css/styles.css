@@ -1,0 +1,800 @@
+/* ==========================================================================
+   Siddarth Santosh — Production Stylesheet
+   Design System & Component Architecture
+   ========================================================================== */
+
+:root {
+  /* Design Tokens */
+  --cream: #F7F5EF;
+  --cream-line: #DDD8CE;
+  --ink: #2B2A28;
+  --ink-soft: #5B5A55;
+  --ink-faint: #9A9890;
+  
+  /* Color Themes */
+  --blue: #4A7FA5;
+  --blue-deep: #2E5A78;
+  --blue-bg: #E9F1F6;
+  --blue-line: #D3E3EC;
+  --blue-block: #C9DCE8;
+  
+  --tan: #A38B4A;
+  --tan-bg: #F2EEE5;
+  --tan-line: #E5DFD0;
+  --tan-block: #E3DCC9;
+  
+  --clay: #B9754B;
+  --clay-bg: #F3E9E2;
+  --clay-line: #E8D9CC;
+  --clay-block: #E6D2C0;
+
+  /* Typography */
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ==========================================================================
+   CSS Reset & Base Rules
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #EFEBE1;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility Focus Ring */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Screen Reader Only Utility */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Skip Navigation Link */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 20px;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 9999;
+  border-radius: 0 0 6px 6px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ==========================================================================
+   Layout Containers
+   ========================================================================== */
+
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--cream);
+  min-height: 100vh;
+  padding: 2.5rem 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+main.main-content {
+  flex: 1 0 auto;
+}
+
+/* ==========================================================================
+   Site Header & Navigation
+   ========================================================================== */
+
+header.siteheader {
+  margin-bottom: 3rem;
+}
+
+nav.sitenav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav.sitenav .name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.2px;
+}
+
+nav.sitenav .name:hover {
+  color: var(--ink-soft);
+}
+
+nav.sitenav .links {
+  display: flex;
+  gap: 28px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  align-items: center;
+}
+
+nav.sitenav .links a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-bottom: 2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+nav.sitenav .links a:hover {
+  color: var(--ink);
+}
+
+nav.sitenav .links a.active {
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--blue);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+
+.hero {
+  text-align: center;
+  padding: 1.5rem 0 2.5rem;
+  border-bottom: 0.5px solid var(--cream-line);
+}
+
+.hero .eyebrow {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--blue);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1.25;
+  margin: 0 0 16px;
+  color: var(--ink);
+}
+
+.hero p {
+  font-size: 15px;
+  color: var(--ink-soft);
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Series & Card Design System
+   (Note: Solid color blocks are the intentional design — NOT placeholders)
+   ========================================================================== */
+
+.series {
+  margin-top: 2.75rem;
+}
+
+.series-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.series-head h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0;
+  color: var(--ink);
+}
+
+.series-head a.series-link {
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.15s ease;
+}
+
+.series-head a.series-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.series-desc {
+  font-size: 13px;
+  margin: 0 0 18px;
+}
+
+.card-grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* Base Card Style */
+.card {
+  border-radius: 10px;
+  padding: 18px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+a.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(43, 42, 40, 0.05);
+}
+
+.card .thumb {
+  height: 90px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.card .tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+
+.card .title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  margin: 0;
+  line-height: 1.4;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Series: Blue (The India Project) */
+.series.blue .card {
+  background: var(--blue-bg);
+  border: 0.5px solid var(--blue-line);
+}
+.series.blue .card .thumb {
+  background: var(--blue-block);
+}
+.series.blue .card .tag {
+  color: var(--blue);
+}
+.series.blue .series-head a.series-link {
+  color: var(--blue);
+}
+.series.blue .series-desc {
+  color: #7A8A94;
+}
+.series.blue .card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Series: Tan (Conversations with My Family) */
+.series.tan .card {
+  background: var(--tan-bg);
+  border: 0.5px solid var(--tan-line);
+  padding: 16px;
+}
+.series.tan .card .thumb {
+  background: var(--tan-block);
+  height: 70px;
+}
+.series.tan .card .tag {
+  color: var(--tan);
+}
+.series.tan .card .title {
+  font-size: 14px;
+}
+.series.tan .series-head a.series-link {
+  color: var(--tan);
+}
+.series.tan .series-desc {
+  color: #9A8B62;
+}
+.series.tan .card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Series: Clay (A Bit of South Asia, Close to Home) */
+.series.clay .card {
+  background: var(--clay-bg);
+  border: 0.5px solid var(--clay-line);
+  padding: 16px;
+}
+.series.clay .card .thumb {
+  background: var(--clay-block);
+  height: 80px;
+}
+.series.clay .card .title {
+  font-size: 14px;
+}
+.series.clay .series-head a.series-link {
+  color: var(--clay);
+}
+.series.clay .series-desc {
+  color: #B08D6E;
+}
+.series.clay .card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ==========================================================================
+   Story / Blog Post Components
+   ========================================================================== */
+
+.story {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.story .eyebrow {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--blue);
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 14px;
+  font-weight: 500;
+}
+
+.story h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.3;
+  text-align: center;
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+
+.story .meta {
+  font-size: 13px;
+  color: var(--ink-faint);
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+/* Story Photography Framing */
+.story-photo-figure {
+  margin: 28px 0;
+}
+
+.photo-tile,
+.story-photo-box {
+  background-color: #DCE9F0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  height: 380px;
+  width: 100%;
+}
+
+.photo-tile.hero-photo-box,
+.story-photo-box.hero-photo-box {
+  margin-bottom: 0;
+  height: 400px;
+}
+
+.photo-tile img,
+.story-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
+
+.story-photo-caption {
+  font-size: 12px;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.story p.body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #3A3936;
+  margin: 0 0 20px;
+}
+
+/* Stat Row */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+  padding: 20px 0;
+  border-top: 0.5px solid var(--cream-line);
+  border-bottom: 0.5px solid var(--cream-line);
+}
+
+.stat-row div {
+  text-align: center;
+}
+
+.stat-row div + div {
+  border-left: 0.5px solid var(--cream-line);
+}
+
+.stat-row p.num {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.stat-row p.label {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+/* Pullquote */
+.pullquote {
+  border-left: 2px solid var(--clay);
+  padding-left: 18px;
+  margin: 28px 0;
+}
+
+.pullquote p {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Pill Button (Fundraiser CTA) */
+.pill-btn-wrap {
+  text-align: center;
+  margin: -8px 0 28px;
+}
+
+.pill-btn {
+  background: transparent;
+  border: 0.5px solid var(--blue);
+  color: var(--blue-deep);
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pill-btn:hover {
+  background: var(--blue-bg);
+}
+
+/* Next Card */
+.next-card {
+  background: var(--clay-bg);
+  border: 0.5px solid var(--clay-line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.next-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(185, 117, 75, 0.1);
+}
+
+.next-card .eyebrow2 {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--clay);
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+
+.next-card .title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  margin: 0;
+  line-height: 1.4;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.next-card .arrow {
+  font-size: 18px;
+  color: #8A4E2A;
+  transition: transform 0.2s ease;
+}
+
+.next-card:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   About Page Components
+   ========================================================================== */
+
+.about {
+  max-width: 600px;
+  margin: 0 auto 3.5rem;
+}
+
+.about .eyebrow {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin: 0 0 20px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--blue-block);
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 32px;
+  color: var(--blue-deep);
+  font-weight: 500;
+}
+
+.about h1 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 0 24px;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.about p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #3A3936;
+  margin: 0 0 20px;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px 0;
+  border-top: 0.5px solid var(--cream-line);
+  border-bottom: 0.5px solid var(--cream-line);
+}
+
+.facts p.label {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin: 0 0 4px;
+}
+
+.facts p.value {
+  font-size: 14px;
+  color: #3A3936;
+  margin: 0;
+  font-weight: 500;
+}
+
+.about-contact-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* ==========================================================================
+   Contact Page & Form Components
+   ========================================================================== */
+
+.contact {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.contact .eyebrow {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.contact h1,
+.contact h2 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.contact p.sub {
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+.contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact input,
+.contact textarea {
+  width: 100%;
+  background: #FFFFFF;
+  border: 0.5px solid var(--blue-line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact input:focus,
+.contact textarea:focus {
+  border-color: var(--blue);
+  outline: 2px solid rgba(74, 127, 165, 0.25);
+}
+
+.contact input::placeholder,
+.contact textarea::placeholder {
+  color: var(--ink-faint);
+}
+
+.contact textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.contact button[type="submit"] {
+  background: var(--blue);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 0;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+}
+
+.contact button[type="submit"]:hover {
+  background: var(--blue-deep);
+}
+
+.contact button[type="submit"]:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Accessible Status Box for Form */
+.form-status {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+.form-status.hidden {
+  display: none;
+}
+
+.form-status.success {
+  display: block;
+  background: #EBF5EE;
+  color: #245A3F;
+  border: 0.5px solid #B7E4C7;
+}
+
+.form-status.error {
+  display: block;
+  background: #FDF2F2;
+  color: #9B2C2C;
+  border: 0.5px solid #F8B4B4;
+}
+
+/* ==========================================================================
+   Site Footer
+   ========================================================================== */
+
+footer.sitefoot {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 0.5px solid var(--cream-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+
+footer.sitefoot .foot-links {
+  display: flex;
+  gap: 24px;
+}
+
+footer.sitefoot a {
+  color: var(--ink-faint);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+footer.sitefoot a:hover {
+  color: var(--ink-soft);
+}
