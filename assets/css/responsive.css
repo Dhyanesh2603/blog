@@ -105,6 +105,32 @@
     gap: 16px;
   }
 
+  /* Series Headers on Mobile */
+  .series-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px 16px;
+    margin-bottom: 8px;
+  }
+
+  .series-head h2 {
+    font-size: 19px;
+    line-height: 1.35;
+    flex: 1 1 auto;
+    min-width: 200px;
+  }
+
+  .series-head a.series-link {
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
   .series {
     margin-top: 2.25rem;
   }
