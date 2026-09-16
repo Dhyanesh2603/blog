@@ -4,8 +4,142 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initReadingProgressBar();
+  initBackToTop();
+  initScrollAnimations();
   initContactForm();
 });
+
+/**
+ * 1. Reading Scroll Progress Bar (Top of Viewport)
+ */
+function initReadingProgressBar() {
+  let bar = document.getElementById('reading-progress');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'reading-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.prepend(bar);
+  }
+
+  let ticking = false;
+  function updateProgress() {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total > 0) {
+      const scrolled = (window.scrollY / total) * 100;
+      bar.style.width = `${Math.min(100, Math.max(0, scrolled))}%`;
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateProgress();
+}
+
+/**
+ * 2. Back to Top Floating Button (Bottom Right Corner)
+ */
+function initBackToTop() {
+  let btn = document.getElementById('back-to-top');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'back-to-top';
+    btn.className = 'back-to-top';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Back to top of page');
+    btn.setAttribute('title', 'Back to top');
+    btn.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    `;
+    document.body.appendChild(btn);
+  }
+
+  let isVisible = false;
+  function toggleBtn() {
+    const shouldShow = window.scrollY > 280;
+    if (shouldShow !== isVisible) {
+      isVisible = shouldShow;
+      if (isVisible) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        toggleBtn();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
+  toggleBtn();
+}
+
+/**
+ * 3. Scroll Reveal Animation for Content Sections and Cards
+ */
+function initScrollAnimations() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const targets = document.querySelectorAll('.series, .card, .story-photo-figure, .photo-tile, .pullquote, .stat-row, .next-card, .about, .contact');
+  if (targets.length === 0) return;
+
+  // Mark all target elements for scroll reveal
+  targets.forEach((el, index) => {
+    el.classList.add('scroll-reveal');
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      // Element is already in viewport on load — reveal with a gentle stagger
+      setTimeout(() => {
+        el.classList.add('revealed');
+      }, index * 40);
+    }
+  });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -30px 0px',
+      threshold: 0.06
+    });
+
+    targets.forEach(el => {
+      if (!el.classList.contains('revealed')) {
+        observer.observe(el);
+      }
+    });
+  } else {
+    targets.forEach(el => el.classList.add('revealed'));
+  }
+}
 
 /**
  * Initializes automatic serverless API contact form submission
